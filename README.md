@@ -19,7 +19,8 @@
 
 ## 🎨 Blog UI 요구사항
 
-Figma : 
+Figma : https://www.figma.com/team_invite/redeem/DjdTfdfKC0X3ImzDcw0wbi
+해당 링크로 접속하신 후, 개발 교육용 UI를 보시면 됩니다.
 
 <br>
 
