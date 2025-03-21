@@ -32,7 +32,7 @@ Figma : https://www.figma.com/team_invite/redeem/DjdTfdfKC0X3ImzDcw0wbi
 
 ## ⚙️ 기능 요구사항
 
-백엔드 스웨거 : https://blog.leets.land/swagger-ui/inex.html
+백엔드 스웨거 : https://blog.leets.land/swagger-ui/index.html
 
 <br>
 
