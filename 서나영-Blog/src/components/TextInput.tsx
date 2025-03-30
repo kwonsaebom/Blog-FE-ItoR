@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
+
+type InputState = 'default' | 'input' | 'click' | 'disabled';
+
+interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  width?: string;
+  disabled?: boolean;
+}
 
 const inputStyles = {
   default: css`
@@ -31,13 +37,13 @@ const inputStyles = {
   `,
 };
 
-const StyledInputContainer = styled.div`
+const StyledInputContainer = styled.div<{ width?: string; $state: InputState }>`
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 12px 16px;
   width: ${({ width }) => width || '100%'};
-  ${({ $state }) => inputStyles[$state] || inputStyles.default};
+  ${({ $state }) => inputStyles[$state]};
 `;
 
 const StyledInput = styled.input`
@@ -49,8 +55,8 @@ const StyledInput = styled.input`
   color: inherit;
 `;
 
-const TextInput = ({ width, disabled, ...props }) => {
-  const [state, setState] = useState('default');
+const TextInput = ({ width, disabled, ...props }: TextInputProps) => {
+  const [state, setState] = useState<InputState>('default');
 
   const handleFocus = () => setState('click');
   const handleBlur = () => setState('input');
@@ -60,13 +66,6 @@ const TextInput = ({ width, disabled, ...props }) => {
       <StyledInput {...props} disabled={disabled} onFocus={handleFocus} onBlur={handleBlur} />
     </StyledInputContainer>
   );
-};
-
-// PropTypes 설정
-TextInput.propTypes = {
-  width: PropTypes.string,
-  disabled: PropTypes.bool,
-  placeholder: PropTypes.string,
 };
 
 export default TextInput;

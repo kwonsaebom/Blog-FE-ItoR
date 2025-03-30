@@ -1,10 +1,17 @@
 import React from 'react';
 import Button from './Button';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+
+interface ModalProps {
+  title: string;
+  description: string;
+  onClose: () => void;
+  onConfirm: () => void;
+  width?: string;
+  height?: string;
+}
 
 const ModalTitle = styled.h2`
-  margin: 0;
   font-size: 14px;
   font-weight: 400;
   line-height: 160%;
@@ -14,7 +21,6 @@ const ModalTitle = styled.h2`
 const ModalDescription = styled.p`
   font-size: 12px;
   color: #909090;
-  margin: 0;
   font-style: normal;
   font-weight: 400;
   line-height: 160%;
@@ -29,9 +35,10 @@ const ModalContent = styled.div`
   gap: 8px;
 `;
 
-const ModalContainer = styled.div`
+const ModalContainer = styled.div<{ width?: string; height?: string | undefined }>`
   display: flex;
   width: ${({ width }) => width || '326px'};
+  height: ${({ height }) => (height ? height : 'auto')};
   padding: 24px 16px 16px 16px;
   flex-direction: column;
   align-items: flex-start;
@@ -48,7 +55,7 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(182, 182, 182, 0.3);
+  background-color: rgba(182, 182, 182, 0.5);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
@@ -64,12 +71,10 @@ const ButtonGroup = styled.div`
   gap: 12px;
 `;
 
-const Modal = ({ title, description, onClose, onConfirm, width, height }) => {
+function Modal({ title, description, onClose, onConfirm, width, height }: ModalProps) {
   return (
-    /* 오버레이 클릭 시 onClose 실행 */
     <ModalOverlay onClick={onClose}>
       <ModalContainer width={width} height={height} onClick={(e) => e.stopPropagation()}>
-        {/* ModalContainer 클릭 시 이벤트 전파 방지 */}
         <ModalContent>
           <ModalTitle>{title}</ModalTitle>
           <ModalDescription>{description}</ModalDescription>
@@ -96,16 +101,6 @@ const Modal = ({ title, description, onClose, onConfirm, width, height }) => {
       </ModalContainer>
     </ModalOverlay>
   );
-};
-
-// PropTypes 설정
-Modal.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
-  width: PropTypes.string,
-  height: PropTypes.string,
-};
+}
 
 export default Modal;

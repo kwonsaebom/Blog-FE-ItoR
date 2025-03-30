@@ -1,10 +1,27 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import styled, { keyframes } from 'styled-components';
 import done from '@/assets/done.svg';
 import error from '@/assets/error_outline.svg';
-import PropTypes from 'prop-types';
 
-const ToastContext = createContext();
+// 토스트 메시지 타입
+type ToastType = {
+  message: string;
+  type: 'positive' | 'negative';
+};
+
+// Context 타입
+interface ToastContextType {
+  showToast: (message: string, type: 'positive' | 'negative') => void;
+  toast: ToastType | null;
+  isVisible: boolean;
+}
+
+// Provider Props 타입
+interface ToastProviderProps {
+  children: ReactNode;
+}
+
+const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 // Fade In/Out 애니메이션
 const fadeIn = keyframes`
@@ -17,17 +34,17 @@ const fadeOut = keyframes`
   100% { opacity: 0; transform: translateY(-10px); }
 `;
 
-const ToastWrapper = styled.div`
+const ToastWrapper = styled.div<{ type: 'positive' | 'negative'; $isVisible: boolean }>`
   position: fixed;
   top: 20px;
-  left: 50%;
+  left: 50vw;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  justify-content: center;
   padding: 0px 12px 0px 8px;
   gap: 4px;
   height: 40px;
+  max-width: 80%;
   border-radius: 25px;
   border: 1px solid ${({ type }) => (type === 'positive' ? '#15DC5E' : '#FF3F3F')};
   background: #fff;
@@ -53,10 +70,13 @@ const ToastMessage = styled.p`
 `;
 
 const Toast = () => {
-  const { toast, isVisible } = useContext(ToastContext);
+  const context = useContext(ToastContext);
+  if (!context) throw new Error('useToast must be used within a ToastProvider');
+
+  const { toast, isVisible } = context;
 
   return toast ? (
-    <ToastWrapper type={toast.type} $isVisible={true}>
+    <ToastWrapper type={toast.type} $isVisible={isVisible}>
       <IconWrapper>
         <img
           src={toast.type === 'positive' ? done : error}
@@ -70,11 +90,11 @@ const Toast = () => {
   ) : null;
 };
 
-export const ToastProvider = ({ children }) => {
-  const [toast, setToast] = useState(null);
+export const ToastProvider = ({ children }: ToastProviderProps) => {
+  const [toast, setToast] = useState<ToastType | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const showToast = (message, type) => {
+  const showToast = (message: string, type: 'positive' | 'negative') => {
     setToast({ message, type });
     setIsVisible(true);
 
@@ -84,7 +104,7 @@ export const ToastProvider = ({ children }) => {
     }, 3000);
   };
 
-  /* isVisible이 false가 된 후 0.3초 뒤에 toast 제거 */
+  /* isVisible이 false가 되면 toast 제거 */
   useEffect(() => {
     if (!isVisible && toast) {
       const timer = setTimeout(() => {
@@ -102,9 +122,8 @@ export const ToastProvider = ({ children }) => {
   );
 };
 
-// PropTypes 설정
-ToastProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+export const useToast = () => {
+  const context = useContext(ToastContext);
+  if (!context) throw new Error('useToast must be used within a ToastProvider');
+  return context;
 };
-
-export const useToast = () => useContext(ToastContext);
