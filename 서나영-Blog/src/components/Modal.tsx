@@ -71,7 +71,7 @@ const ButtonGroup = styled.div`
   gap: 12px;
 `;
 
-function Modal({ title, description, onClose, onConfirm, width, height }: ModalProps) {
+const Modal = ({ title, description, onClose, onConfirm, width, height }: ModalProps) => {
   return (
     <ModalOverlay onClick={onClose}>
       <ModalContainer width={width} height={height} onClick={(e) => e.stopPropagation()}>
@@ -101,6 +101,6 @@ function Modal({ title, description, onClose, onConfirm, width, height }: ModalP
       </ModalContainer>
     </ModalOverlay>
   );
-}
+};
 
 export default Modal;
