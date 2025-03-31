@@ -34,11 +34,15 @@ const IconWrapper = styled.span`
 
 const Button = ({ children, type = 'None', ...props }: ButtonProps) => {
   const icon =
-    type === 'Create' ? <img src={CreateIcon} alt='Create' width={24} height={24} /> : null;
+    type === 'Create' ? (
+      <IconWrapper>
+        <img src={CreateIcon} alt='Create' width={24} height={24} />
+      </IconWrapper>
+    ) : null;
 
   return (
     <StyledButton {...props}>
-      {icon && <IconWrapper>{icon}</IconWrapper>}
+      {icon}
       {children}
     </StyledButton>
   );
