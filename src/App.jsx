@@ -1,35 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import Button from "./components/Button";
+import Toast from "./components/Toast";
+import theme from "./styles/theme";
+
+import styled from "styled-components";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [toastColor, setToastColor] = useState(theme.colors.white);
+
+  const handleButtonClick = (message, color) => {
+    setToastMessage(message);
+    setToastColor(color);
+    setShowToast(true);
+  };
+
+  const handleCloseToast = () => {
+    setShowToast(false);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Container>
+        <Button
+          onClick={() =>
+            handleButtonClick("내용을 입력해주세요", theme.colors.negative)
+          }
+          width="145px"
+          height="40px"
+          fontSize="14px"
+          color={theme.colors.point}
+        >
+          깃로그 시작하기
+        </Button>
+
+        <Button
+          onClick={() =>
+            handleButtonClick("저장되었습니다!", theme.colors.positive)
+          }
+          width="145px"
+          height="40px"
+          fontSize="14px"
+          color={theme.colors.gray56}
+        >
+          깃로그 시작하기
+        </Button>
+
+        <Button
+          onClick={() =>
+            handleButtonClick("저장되었습니다!", theme.colors.positive)
+          }
+          width="145px"
+          height="40px"
+          fontSize="14px"
+          color={theme.colors.white}
+          background={theme.colors.black}
+        >
+          깃로그 시작하기
+        </Button>
+      </Container>
+      {showToast && (
+        <Toast
+          message={toastMessage}
+          color={toastColor}
+          onClose={handleCloseToast}
+        />
+      )}
     </>
-  )
+  );
 }
 
-export default App
+const Container = styled.div`
+  position: fixed;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export default App;
