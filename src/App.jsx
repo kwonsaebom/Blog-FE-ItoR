@@ -55,7 +55,7 @@ function App() {
           height="40px"
           fontSize="14px"
           color={theme.colors.white}
-          background={theme.colors.black}
+          $background={theme.colors.black}
         >
           깃로그 시작하기
         </Button>

@@ -13,7 +13,7 @@ const StyledButton = styled.button`
   width: ${(props) => props.width || "auto"};
   height: ${(props) => props.height || "auto"};
   font-size: ${(props) => props.fontSize || "14px"};
-  background-color: ${(props) => props.background || "transparent"};
+  background-color: ${({ $background }) => $background || "transparent"};
   color: ${({ color }) => color || theme.colors.gray50};
   border: 1px solid ${({ color }) => color || theme.colors.gray50};
   padding: 8px 12px;
