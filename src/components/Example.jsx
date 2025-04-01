@@ -7,6 +7,7 @@ import Button from "@components/Button";
 import Toast from "@components/Toast";
 import Input from "@components/Input";
 import Image from "@components/Image";
+import Modal from "@components/Modal";
 
 import exampleImage from "@assets/images/example.png";
 
@@ -14,6 +15,8 @@ export default function Example() {
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastColor, setToastColor] = useState(theme.colors.white);
+
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleButtonClick = (message, color) => {
     setToastMessage(message);
@@ -24,6 +27,9 @@ export default function Example() {
   const handleCloseToast = () => {
     setShowToast(false);
   };
+
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
 
   return (
     <>
@@ -70,8 +76,32 @@ export default function Example() {
           alt="샘플 이미지"
           width="150px"
           height="150px"
-          borderRadius="8px"
+          $radius="8px"
         />
+        <button onClick={handleOpenModal}>모달 열기</button>
+
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+          <h2>Title</h2>
+          <p>Content</p>
+          <ButtonContainer>
+            <Button
+              onClick={handleCloseModal}
+              $radius="2px"
+              color={theme.colors.black}
+              $border={theme.colors.gray96}
+            >
+              취소
+            </Button>
+            <Button
+              onClick={handleCloseModal}
+              $radius="2px"
+              color={theme.colors.white}
+              $background={theme.colors.negative}
+            >
+              삭제하기
+            </Button>
+          </ButtonContainer>
+        </Modal>
       </Container>
       {showToast && (
         <Toast
@@ -85,12 +115,12 @@ export default function Example() {
 }
 
 const Container = styled.div`
-  position: fixed;
-  top: 200px;
-  left: 50%;
-  transform: translateX(-50%);
-
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 12px;
 `;

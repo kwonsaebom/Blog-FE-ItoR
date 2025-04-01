@@ -3,6 +3,7 @@ const theme = {
     point: "#00A1FF",
     negative: "#FF3F3F",
     positive: "#15DC5E",
+    gray96: "#F5F5F5",
     gray90: "#E6E6E6",
     gray78: "#C8C8C8",
     gray50: "#909090",
