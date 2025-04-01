@@ -1,11 +1,12 @@
-import Example from "@components/Example";
+import { RouterProvider } from 'react-router-dom'
+import router from '@/routes'
 
 function App() {
   return (
     <>
-      <Example />
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
     </>
-  );
+  )
 }
 
-export default App;
+export default App
