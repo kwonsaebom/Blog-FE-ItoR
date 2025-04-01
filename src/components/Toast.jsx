@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
-export default function Toast({ message, color, onClose }) {
-  const [visible, setVisible] = useState(true);
+import theme from "@styles/theme";
 
+export default function Toast({ message, color, onClose }) {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, 3000);
+    const timer = setTimeout(() => {}, 3000);
 
     const closeTimer = setTimeout(() => {
       onClose();
