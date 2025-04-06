@@ -14,23 +14,11 @@ const router = createBrowserRouter([
         <Layout />
       </Suspense>
     ),
-    children: [{ index: true, element: <MainPage /> }],
-  },
-  {
-    path: '/login',
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <LoginPage />
-      </Suspense>
-    ),
-  },
-  {
-    path: '/signup',
-    element: (
-      <Suspense fallback={<div>Loading...</div>}>
-        <SignUpPage />
-      </Suspense>
-    ),
+    children: [
+      { index: true, element: <MainPage /> },
+      { path: '/login', element: <LoginPage /> },
+      { path: '/signUp', element: <SignUpPage /> },
+    ],
   },
 ])
 

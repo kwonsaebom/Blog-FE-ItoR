@@ -1,13 +1,11 @@
 import MenuIcon from '@/assets/icons/icon_menu.svg?react'
 import LogoIcon from '@/assets/icons/logo_black.svg?react'
 
-import styled from 'styled-components'
-
 export default function Header() {
   return (
-    <header class='flex items-center'>
-      <MenuIcon></MenuIcon>
-      <LogoIcon class='w-[77px] h-[28px]'></LogoIcon>
+    <header className='py-4 px-3 flex items-center gap-3 '>
+      <MenuIcon />
+      <LogoIcon className='w-[67px] h-[28px]' />
     </header>
   )
 }
