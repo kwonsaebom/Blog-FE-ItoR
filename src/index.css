@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
+  --breakpoint-desktop: 391px;
+
   --color-point: #00a1ff;
   --color-negative: #ff3f3f;
   --color-positive: #15dc5e;
