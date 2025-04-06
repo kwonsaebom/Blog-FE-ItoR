@@ -1,5 +1,5 @@
-import MenuIcon from '@/assets/icons/icon_menu.svg?react'
-import LogoIcon from '@/assets/icons/logo_black.svg?react'
+import MenuIcon from '@assets/icons/icon_menu.svg?react'
+import LogoIcon from '@assets/icons/logo_black.svg?react'
 
 export default function Header() {
   return (

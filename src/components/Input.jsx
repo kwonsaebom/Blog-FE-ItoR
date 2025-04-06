@@ -1,17 +1,14 @@
-import styled from "styled-components";
-import theme from "@styles/theme";
-
-export default function Input({ placeholder, ...props }) {
-  return <StyledInput placeholder={placeholder} {...props} />;
+export default function Input({ type, label }) {
+  const limit = <p className='text-gray78 text-xs'>* 20글자 이내</p>
+  return (
+    <label className='py-3 flex flex-col gap-3'>
+      {label}
+      <input
+        type={type}
+        placeholder={type === 'password' ? '......' : label}
+        className='py-3 px-4 border border-gray90 rounded-sm placeholder:text-gray78 '
+      />
+      {label === '닉네임' ? limit : undefined}
+    </label>
+  )
 }
-
-const StyledInput = styled.input`
-  width: ${(props) => props.width || "auto"};
-  height: ${(props) => props.height || "auto"};
-  font-size: ${(props) => props.fontSize || "14px"};
-  background-color: ${({ $background }) => $background || "transparent"};
-  color: ${({ color }) => color || theme.colors.gray50};
-  border: 1px solid ${({ color }) => color || theme.colors.gray90};
-  padding: 12px 16px;
-  border-radius: 4px;
-`;
