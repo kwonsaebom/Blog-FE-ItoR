@@ -9,7 +9,7 @@ function App() {
     <>
       <RouterProvider router={router} future={{ v7_startTransition: true }} />
 
-      <div className='bg-amber-400'>
+      {/* <div className='bg-amber-400'>
         <Modal
           titleContent='댓글을 삭제할까요?'
           subTitleContent='찐삭제?'
@@ -17,7 +17,7 @@ function App() {
           primaryText='삭제하기'
           isCancel={true}
         />
-      </div>
+      </div> */}
     </>
   )
 }
