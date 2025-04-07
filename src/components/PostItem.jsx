@@ -1,6 +1,8 @@
-import exampleImage from '@assets/images/example.png'
+import PostMeta from '@components/PostMeta'
+import PostImage from '@components/PostImage'
+export default function PostItem({ isImg = false }) {
+  // isImg : 데이터 들어오면 삭제
 
-export default function PostItem() {
   return (
     <>
       <section className='flex py-2 border-b border-b-gray96'>
@@ -11,14 +13,9 @@ export default function PostItem() {
             repellendus? Necessitatibus minima, nulla et debitis facere placeat illum illo beatae
             fuga hic at, voluptate dolor dicta consectetur doloremque.
           </p>
-          <div className='py-3 flex gap-3 items-center text-gray56 text-xs font-light'>
-            <img src={exampleImage} className='w-5 h-5 rounded-[20px]' />
-            <span className='-ml-1.5 text-gray30'>닉네임</span>
-            <span>Fed 17. 2025.</span>
-            <span>댓글0</span>
-          </div>
+          <PostMeta />
         </div>
-        <img src={exampleImage} className='py-3 px-4 w-[92px] h-[92px] box-content' />
+        {isImg && <PostImage size='small' />}
       </section>
     </>
   )
