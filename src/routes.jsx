@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom'
 const Layout = lazy(() => import('@components/layout'))
 const MainPage = lazy(() => import('@pages/MainPage'))
 const PostDetailPage = lazy(() => import('@pages/PostDetailPage'))
+const PostWritePage = lazy(() => import('@pages/PostWritePage'))
 const LoginPage = lazy(() => import('@pages/LoginPage'))
 const SignUpPage = lazy(() => import('@pages/SignUpPage'))
 const EmailSignUpPage = lazy(() => import('@pages/EmailSignUpPage'))
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <MainPage /> },
       { path: '/post/:id', element: <PostDetailPage /> },
+      { path: '/write', element: <PostWritePage /> },
       { path: '/login', element: <LoginPage /> },
       { path: '/signUp', element: <SignUpPage /> },
       { path: '/signup/email', element: <EmailSignUpPage /> },

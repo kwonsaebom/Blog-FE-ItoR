@@ -1,14 +1,15 @@
 import PostMeta from '@components/PostMeta'
+import UserInfo from '@components/UserInfo'
 
 export default function PostDetailPage() {
   return (
-    <>
+    <section className='desktop:max-w-[688px] m-auto'>
       <div className='py-10 px-4'>
         <header className='py-3 border-b border-gray96 flex flex-col gap-8'>
           <h1 className='py-3 text-2xl font-medium'>32 Title one line</h1>
           <PostMeta />
         </header>
-        <section className='py-8 border-b border-gray96 '>
+        <section className='py-8 border-b border-gray96'>
           <p className='py-3 text-sm font-light text-gray30'>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt, ullam, quis voluptatibus
             et quo necessitatibus debitis tempore incidunt exercitationem quas architecto, obcaecati
@@ -43,10 +44,13 @@ export default function PostDetailPage() {
           </p>
           <textarea
             placeholder='로그인을 하고 댓글을 달아보세요!'
-            className='h-20 my-3 py-3 px-4 border border-gray90 rounded-sm text-xs font-light placeholder:text-gray30 resize-none'
+            className='h-20 my-3 py-3 px-4 border border-gray90 rounded-sm text-xs font-light text-gray30 placeholder:text-gray56 resize-none focus:outline-0'
           />
         </section>
       </div>
-    </>
+      <footer className='h-50 mb-12 py-10 px-4 bg-gray96 desktop:py-8'>
+        <UserInfo />
+      </footer>
+    </section>
   )
 }

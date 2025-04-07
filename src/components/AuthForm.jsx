@@ -7,8 +7,8 @@ import KakaoIcon from '@assets/icons/icon_kakao.svg?react'
 import Input from '@components/Input'
 
 export default function AuthForm() {
-  const path = useLocation().pathname.split('/')[1]
-  const isLoginPage = !path.includes('signup')
+  const pathname = useLocation().pathname.split('/')[1]
+  const isLoginPage = !pathname.includes('signup')
 
   // 공통 텍스트 및 색상
   const mainButtonText = `이메일로 ${isLoginPage ? '로그인' : '회원가입'}`
