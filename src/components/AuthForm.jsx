@@ -20,16 +20,19 @@ export default function AuthForm() {
 
   return (
     <section
-      className={`py-20 px-12 desktop:max-w-[782px] desktop:py-20 desktop:m-auto desktop:flex desktop:gap-[90px] ${backColor}`}
+      className={`m-4 py-20 px-8 rounded-lg absolute inset-x-0 top-1/2 -translate-y-1/2  desktop:max-w-[782px] desktop:py-20 desktop:m-auto desktop:flex desktop:gap-[90px]  ${backColor}`}
     >
-      <aside className='flex flex-col justify-center items-center'>
+      <aside className='w-[294px] flex flex-col justify-center items-center'>
         <Logo className='w-[283px] h-[76px] my-10' />
         <p className='px-3 py-4 text-gray56 text-sm font-extralight text-center'>
           You can make anything by writing
         </p>
       </aside>
-
-      <div className='flex flex-col gap-2 desktop:my-10'>
+      {/* <div className='w-[294px] desktop:w-[312px] flex flex-col  gap-2'>
+            <Input type='email' label='이메일' isLoginPage />
+            <Input type='password' label='비밀번호' isLoginPage />
+          </div> */}
+      <div className='w-[294px] desktop:w-[312px] flex flex-col gap-2 desktop:my-10'>
         {isLoginPage && (
           <>
             <Input type='email' label='이메일' isLoginPage />

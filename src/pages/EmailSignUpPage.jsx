@@ -17,7 +17,7 @@ export default function EmailSignUpPage() {
       <section className='py-3 px-4 flex flex-col text-sm font-light text-gray56 desktop:max-w-[688px] desktop:m-auto'>
         <div className='py-5 flex flex-col gap-4'>
           <span>프로필 사진</span>
-          <LogoIcon />
+          <LogoIcon className='w-[90px] h-[90px]' />
           <button className='w-fit px-2 py-1 border border-gray90 rounded-xs text-xs font-normal'>
             <PhotoIcon className='inline-block' />
             <span className='ml-1'>프로필 사진 추가</span>

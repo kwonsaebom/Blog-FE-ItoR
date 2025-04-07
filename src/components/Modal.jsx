@@ -5,6 +5,7 @@ import ModalContent from '@components/ModalContent'
 
 export default function Modal(props) {
   const [showModal, setShowModal] = useState(false)
+
   return (
     <>
       <button onClick={() => setShowModal(true)}>모달 열기</button>
