@@ -1,6 +1,7 @@
 import PostMeta from '@components/PostMeta'
 import UserInfo from '@components/UserInfo'
 import CommentInput from '@components/CommentInput'
+import Comment from '@components/Comment'
 
 export default function PostDetailPage() {
   return (
@@ -37,14 +38,16 @@ export default function PostDetailPage() {
               PageMaker including versions of Lorem Ipsum.
             </p>
           </section>
-          <section className='py-3 flex flex-col gap-10'>
+          <section className='py-3 px-4 flex flex-col gap-10'>
             <span className='font-medium'>
               댓글 <span className='font-normal text-point'>0</span>
             </span>
-            <p className='text-sm font-light text-gray78 text-center'>
+            {/* <p className='text-sm font-light text-gray78 text-center'>
               작성된 댓글이 없습니다. <br />
               응원의 첫 번째 댓글을 달아주세요.
-            </p>
+            </p> */}
+            <Comment />
+            <Comment />
             <CommentInput isLogin={true} />
           </section>
         </div>

@@ -4,7 +4,7 @@ export default function CommentInput({ isLogin = false }) {
   const renderTextarea = (placeholder, extraClass = '') => (
     <textarea
       placeholder={placeholder}
-      className={`h-20 w-full py-3 px-4 rounded-sm text-xs font-light text-gray30 placeholder:text-gray56 resize-none focus:outline-0 ${extraClass}`}
+      className={`h-20 w-full py-3 rounded-sm text-xs font-light text-gray30 placeholder:text-gray56 resize-none focus:outline-0 ${extraClass}`}
     />
   )
 
