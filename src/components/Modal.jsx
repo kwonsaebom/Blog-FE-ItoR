@@ -1,19 +1,16 @@
 import { createPortal } from 'react-dom'
-import { useState } from 'react'
-
+import AuthForm from '@components/AuthForm'
 import ModalContent from '@components/ModalContent'
 
-export default function Modal(props) {
-  const [showModal, setShowModal] = useState(false)
-
-  return (
+export default function Modal({ isLoginPage, onClose, ...props }) {
+  return createPortal(
     <>
-      <button onClick={() => setShowModal(true)}>모달 열기</button>
-      {showModal &&
-        createPortal(
-          <ModalContent {...props} onClose={() => setShowModal(false)} />,
-          document.body,
-        )}
-    </>
+      <div
+        className='fixed inset-0 bg-[rgba(182,182,182,0.3)] backdrop-blur-[2px]'
+        onClick={onClose}
+      />
+      {isLoginPage ? <AuthForm onClose={onClose} /> : <ModalContent onClose={onClose} {...props} />}
+    </>,
+    document.body,
   )
 }
