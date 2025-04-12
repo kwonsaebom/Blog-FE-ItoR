@@ -13,7 +13,7 @@ export default function CommentInput({ isLogin = false }) {
       {isLogin ? (
         <div className='py-3 px-4 rounded-sm border border-gray90 flex flex-col'>
           <PostMeta isDetail={false} />
-          {renderTextarea('댓글을 입력하세요.', 'border-b border-gray96 px-0')}
+          {renderTextarea('댓글을 입력하세요.', 'border-b border-gray96')}
           <button className='w-fit py-2 px-4 mt-2 border border-gray56 rounded-3xl text-gray56 text-sm self-end'>
             등록
           </button>
