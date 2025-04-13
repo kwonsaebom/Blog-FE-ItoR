@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import useModal from '@hooks/useModal'
@@ -6,35 +7,93 @@ import Modal from '@components/Modal'
 import MenuIcon from '@assets/icons/icon_menu.svg?react'
 import WriteIcon from '@assets/icons/icon_write.svg?react'
 import LogoIcon from '@assets/icons/logo_black.svg?react'
+import ChatIcon from '@assets/icons/icon_chat.svg?react'
+import MoreIcon from '@assets/icons/icon_more.svg?react'
 
 export default function Header() {
   const { isOpen, open, close } = useModal()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [modalType, setModalType] = useState('default')
 
   const pathname = useLocation().pathname
-  const isWritePage = pathname.includes('write')
 
+  const isWritePage = pathname.includes('write')
+  const isPostPage = pathname.includes('post')
+
+  const defaultButton = (
+    <Link to='/write' className='py-2 px-3 flex items-center gap-1 cursor-pointer'>
+      <WriteIcon className='text-gray56' />
+      <span className='text-gray56 text-sm'>깃로그 쓰기</span>
+    </Link>
+  )
+
+  const writePageButton = (
+    <div className='flex gap-1'>
+      <button className='py-2 px-3 text-negative'>삭제하기</button>
+      <button className='py-2 px-3'>게시하기</button>
+    </div>
+  )
+
+  const postPageButton = (
+    <div className='flex items-center gap-2'>
+      <button className='p-2 cursor-pointer'>
+        <ChatIcon />
+      </button>
+      <button className='p-2 cursor-pointer' onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <MoreIcon />
+      </button>
+      {isMenuOpen && (
+        <>
+          <div className='w-40 bg-white rounded-sm shadow-modal flex flex-col items-start absolute top-15 right-5 text-sm before:content-[""] before:absolute before:-top-4 before:right-0 before:-translate-x-1/2 before:border-8 before:border-transparent before:border-b-white'>
+            <button className='p-3 cursor-pointer'>수정하기</button>
+            <button className='p-3 text-negative cursor-pointer' onClick={open}>
+              삭제하기
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  )
   return (
     <header className='py-4 px-3 border-b border-gray96 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
-        <button onClick={open} className='cursor-pointer'>
+        <button
+          onClick={() => {
+            open()
+            setModalType('login')
+          }}
+          className='cursor-pointer'
+        >
           <MenuIcon />
         </button>
         <Link to='/'>
           <LogoIcon className='w-[67px] h-[28px]' />
         </Link>
       </div>
-      {isWritePage ? (
-        <div className='flex gap-2'>
-          <button className='py-2 px-3 text-negative'>삭제하기</button>
-          <button className='py-2 px-3'>게시하기</button>
-        </div>
-      ) : (
-        <Link to='/write' className='py-2 px-3 flex items-center gap-1 cursor-pointer'>
-          <WriteIcon className='text-gray56' />
-          <span className='text-gray56 text-sm'>깃로그 쓰기</span>
-        </Link>
-      )}
-      {isOpen && <Modal isLoginPage={true} onClose={close} />}
+
+      {isWritePage && writePageButton}
+      {isPostPage && postPageButton}
+      {!isWritePage && !isPostPage && defaultButton}
+
+      {isOpen &&
+        (modalType === 'login' ? (
+          <Modal
+            isLoginPage={true}
+            onClose={() => {
+              close()
+              setModalType('default')
+            }}
+          />
+        ) : (
+          <Modal
+            titleContent='해당 블로그를 삭제하시겠어요?'
+            subTitleContent='삭제된 블로그는 다시 확인할 수 없어요.'
+            primaryText='삭제하기'
+            isCancel={true}
+            isLoginPage={false}
+            onClose={close}
+          />
+        ))}
     </header>
   )
 }

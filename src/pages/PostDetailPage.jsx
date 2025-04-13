@@ -38,7 +38,7 @@ export default function PostDetailPage() {
               PageMaker including versions of Lorem Ipsum.
             </p>
           </section>
-          <section className='py-3 px-4 flex flex-col gap-10'>
+          <section className='p-4 flex flex-col gap-10'>
             <span className='font-medium'>
               댓글 <span className='font-normal text-point'>0</span>
             </span>
