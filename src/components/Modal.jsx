@@ -11,6 +11,6 @@ export default function Modal({ isLoginPage, onClose, ...props }) {
       />
       {isLoginPage ? <AuthForm onClose={onClose} /> : <ModalContent onClose={onClose} {...props} />}
     </>,
-    document.body,
+    document.getElementById('modal-root'),
   )
 }

@@ -1,3 +1,5 @@
+import Toast from '@components/Toast'
+
 export default function ModalContent({
   onClose,
   titleContent,
@@ -8,6 +10,8 @@ export default function ModalContent({
 }) {
   const dangerColor = 'bg-negative border-negative'
   const primaryColor = 'bg-point border-point'
+
+  const []
 
   return (
     <div className='w-fit p-4 shadow-modal bg-white rounded-sm text-sm fixed top-1/3 inset-x-0 m-auto'>
@@ -21,6 +25,7 @@ export default function ModalContent({
           {closeText}
         </button>
         <button
+          onClick={onClose}
           className={`w-[140px] h-[40px] rounded-xs border text-white cursor-pointer ${isCancel ? dangerColor : primaryColor}`}
         >
           {primaryText}

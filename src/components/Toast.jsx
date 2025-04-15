@@ -1,38 +1,19 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
+import { createPortal } from 'react-dom'
 
-import theme from "@styles/theme";
+import DoneIcon from '@assets/icons/icon_done.svg?react'
+import ErrorIcon from '@assets/icons/icon_error.svg?react'
 
-export default function Toast({ message, color, onClose }) {
-  useEffect(() => {
-    const timer = setTimeout(() => {}, 3000);
+export default function Toast() {
+  const errorMessage = '내용을 입력해주세요'
+  const doneMessage = '저장되었습니다!'
 
-    const closeTimer = setTimeout(() => {
-      onClose();
-    }, 3500);
+  const errorStyle = 'text-negative'
+  const doneStyle = 'text-positive'
 
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(closeTimer);
-    };
-  }, [message, onClose]);
-
-  return <ToastContainer color={color}>{message}</ToastContainer>;
+  return createPortal(
+    <>
+      <p className={``}>{isError ? errorMessage : doneMessage}</p>
+    </>,
+    document.getElementById('toast-root'),
+  )
 }
-
-const ToastContainer = styled.div`
-  display: inline-block;
-  color: ${({ color }) => color};
-  border: 1px solid;
-  border-color: ${({ color }) => color || theme.colors.gray50};
-  padding: 8px 12px;
-  border-radius: 25px;
-  font-size: 14px;
-
-  transition: ease-in-out, transform 0.5s ease-in-out;
-
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-`;
