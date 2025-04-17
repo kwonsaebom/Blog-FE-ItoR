@@ -1,4 +1,5 @@
 import UserInfo from '@components/UserInfo'
+import { Link } from 'react-router-dom'
 
 export default function Sidebar() {
   return (
@@ -6,9 +7,12 @@ export default function Sidebar() {
       <UserInfo />
       <div className='flex flex-col h-[75vh] justify-between'>
         <div className='flex gap-2 pt-7'>
-          <button className='w-[100px] px-3 py-2 border border-point rounded-3xl text-point text-sm cursor-pointer'>
+          <Link
+            to={'/mypage'}
+            className='w-[100px] px-3 py-2 border border-point rounded-3xl text-point text-sm cursor-pointer'
+          >
             나의 깃로그
-          </button>
+          </Link>
           <button className='w-[100px] px-3 py-2 border border-point rounded-3xl text-point text-sm cursor-pointer'>
             깃로그 쓰기
           </button>

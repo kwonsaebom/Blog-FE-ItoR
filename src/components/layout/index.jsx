@@ -8,7 +8,7 @@ export default function layout() {
   return (
     <>
       <Header />
-      <main className=' py-10 z-0'>
+      <main className=' y-10 z-0'>
         <Outlet />
       </main>
     </>
