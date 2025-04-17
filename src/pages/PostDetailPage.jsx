@@ -1,9 +1,22 @@
+import { useState, useEffect } from 'react'
+
 import PostMeta from '@components/PostMeta'
 import UserInfo from '@components/UserInfo'
 import CommentInput from '@components/CommentInput'
 import Comment from '@components/Comment'
+import Toast from '@components/Toast'
 
 export default function PostDetailPage() {
+  const [isToastOpen, setIsToastOpen] = useState(false)
+
+  useEffect(() => {
+    if (isToastOpen) {
+      const timer = setTimeout(() => setIsToastOpen(false), 1000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isToastOpen])
+
   return (
     <>
       <section className='desktop:max-w-[688px] m-auto'>
@@ -46,8 +59,8 @@ export default function PostDetailPage() {
               작성된 댓글이 없습니다. <br />
               응원의 첫 번째 댓글을 달아주세요.
             </p> */}
-            <Comment />
-            <Comment />
+            <Comment setIsToastOpen={setIsToastOpen} />
+            <Comment setIsToastOpen={setIsToastOpen} />
             <CommentInput isLogin={true} />
           </section>
         </div>
@@ -55,6 +68,7 @@ export default function PostDetailPage() {
       <footer className='h-50 mb-12 py-10 px-4 bg-gray96 desktop:py-8'>
         <UserInfo />
       </footer>
+      {isToastOpen && <Toast isError={false}>삭제가 완료되었습니다!</Toast>}
     </>
   )
 }

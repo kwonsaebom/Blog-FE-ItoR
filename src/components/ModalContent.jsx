@@ -18,7 +18,11 @@ export default function ModalContent({
   return (
     <div className='w-fit p-4 shadow-modal bg-white rounded-sm text-sm fixed top-1/3 inset-x-0 m-auto'>
       <p className='py-2 '>{titleContent}</p>
-      <p className='pb-6 text-gray56 text-xs'>{subTitleContent}</p>
+      {subTitleContent ? (
+        <p className='pb-6 text-gray56 text-xs'>{subTitleContent}</p>
+      ) : (
+        <div className='py-2'></div>
+      )}
       <div className='flex gap-3'>
         <button
           onClick={onClose}

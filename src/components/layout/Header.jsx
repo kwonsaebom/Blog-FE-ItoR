@@ -112,7 +112,7 @@ export default function Header() {
             setToastOpen={setIsToastOpen}
           />
         ))}
-      {isToastOpen && <Toast isError={false} />}
+      {isToastOpen && <Toast isError={false}>삭제가 완료되었습니다</Toast>}
     </header>
   )
 }
