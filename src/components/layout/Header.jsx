@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import useModal from '@hooks/useModal'
 import Modal from '@components/Modal'
+import Toast from '@components/Toast'
 
 import MenuIcon from '@assets/icons/icon_menu.svg?react'
 import WriteIcon from '@assets/icons/icon_write.svg?react'
@@ -14,6 +15,7 @@ export default function Header() {
   const { isOpen, open, close } = useModal()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [modalType, setModalType] = useState('default')
+  const [isToastOpen, setIsToastOpen] = useState(false)
 
   const pathname = useLocation().pathname
 
@@ -46,7 +48,13 @@ export default function Header() {
         <>
           <div className='w-40 bg-white rounded-sm shadow-modal flex flex-col items-start absolute top-15 right-5 text-sm before:content-[""] before:absolute before:-top-4 before:right-0 before:-translate-x-1/2 before:border-8 before:border-transparent before:border-b-white'>
             <button className='p-3 cursor-pointer'>수정하기</button>
-            <button className='p-3 text-negative cursor-pointer' onClick={open}>
+            <button
+              className='p-3 text-negative cursor-pointer'
+              onClick={() => {
+                open()
+                setIsMenuOpen(false)
+              }}
+            >
               삭제하기
             </button>
           </div>
@@ -54,6 +62,15 @@ export default function Header() {
       )}
     </div>
   )
+
+  useEffect(() => {
+    if (isToastOpen) {
+      const timer = setTimeout(() => setIsToastOpen(false), 1000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isToastOpen])
+
   return (
     <header className='py-4 px-3 border-b border-gray96 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
@@ -92,8 +109,10 @@ export default function Header() {
             isCancel={true}
             isLoginPage={false}
             onClose={close}
+            setToastOpen={setIsToastOpen}
           />
         ))}
+      {isToastOpen && <Toast isError={false} />}
     </header>
   )
 }
