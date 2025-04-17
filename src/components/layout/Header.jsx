@@ -72,7 +72,7 @@ export default function Header() {
   }, [isToastOpen])
 
   return (
-    <header className='py-4 px-3 border-b border-gray96 flex items-center justify-between'>
+    <header className='z-10 fixed w-full py-4 px-3 bg-white border-b border-gray96 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
         <button
           onClick={() => {

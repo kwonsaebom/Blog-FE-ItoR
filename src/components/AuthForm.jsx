@@ -35,7 +35,7 @@ export default function AuthForm({ onClose }) {
 
   return (
     <section
-      className={`m-4 py-20 px-8 rounded-lg absolute inset-x-0 top-1/2 -translate-y-1/2  desktop:max-w-[782px] desktop:py-20 desktop:m-auto desktop:flex desktop:gap-[90px]  ${backColor}`}
+      className={`z-40 m-4 py-20 px-8 rounded-lg absolute inset-x-0 top-1/2 -translate-y-1/2  desktop:max-w-[782px] desktop:py-20 desktop:m-auto desktop:flex desktop:gap-[90px]  ${backColor}`}
     >
       {isLoginPage ? (
         <button onClick={onClose} className='absolute top-6 right-6 cursor-pointer'>
