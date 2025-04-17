@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import useModal from '@hooks/useModal'
 import Modal from '@components/Modal'
 import Toast from '@components/Toast'
+import Sidebar from '@components/layout/Sidebar'
 
 import MenuIcon from '@assets/icons/icon_menu.svg?react'
 import WriteIcon from '@assets/icons/icon_write.svg?react'
@@ -16,6 +17,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [modalType, setModalType] = useState('default')
   const [isToastOpen, setIsToastOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const pathname = useLocation().pathname
 
@@ -75,12 +77,17 @@ export default function Header() {
     <header className='z-10 fixed w-full py-4 px-3 bg-white border-b border-gray96 flex items-center justify-between'>
       <div className='flex items-center gap-3'>
         <button
-          onClick={() => {
-            open()
-            setModalType('login')
-          }}
           className='cursor-pointer'
+          onClick={() => {
+            setIsSidebarOpen(true)
+          }}
+          // onClick={() => {
+          //   open()
+          //   setModalType('login')
+          // }}
+          // className='cursor-pointer'
         >
+          {isSidebarOpen && <Sidebar />}
           <MenuIcon />
         </button>
         <Link to='/'>
