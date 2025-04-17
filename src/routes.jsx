@@ -9,6 +9,7 @@ const SignUpPage = lazy(() => import('@pages/SignUpPage'))
 const EmailSignUpPage = lazy(() => import('@pages/EmailSignUpPage'))
 const KakaoSignUpPage = lazy(() => import('@pages/KakaoSignUpPage'))
 const MyPage = lazy(() => import('@pages/MyPage'))
+const ModifyPage = lazy(() => import('@pages/ModifyPage'))
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: '/signup/email', element: <EmailSignUpPage /> },
       { path: '/signup/kakao', element: <KakaoSignUpPage /> },
       { path: '/mypage', element: <MyPage /> },
+      { path: '/mypage/setting', element: <ModifyPage /> },
     ],
   },
 ])

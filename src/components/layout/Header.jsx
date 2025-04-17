@@ -23,6 +23,7 @@ export default function Header() {
 
   const isWritePage = pathname.includes('write')
   const isPostPage = pathname.includes('post')
+  const isModifyPage = pathname.includes('setting')
 
   const defaultButton = (
     <Link to='/write' className='py-2 px-3 flex items-center gap-1 cursor-pointer'>
@@ -65,6 +66,15 @@ export default function Header() {
     </div>
   )
 
+  const modifyPageButton = (
+    <>
+      <div className='flex gap-1'>
+        <button className='py-2 px-3 text-negative'>취소하기</button>
+        <button className='py-2 px-3'>저장하기</button>
+      </div>
+    </>
+  )
+
   useEffect(() => {
     if (isToastOpen) {
       const timer = setTimeout(() => setIsToastOpen(false), 1000)
@@ -97,7 +107,8 @@ export default function Header() {
 
       {isWritePage && writePageButton}
       {isPostPage && postPageButton}
-      {!isWritePage && !isPostPage && defaultButton}
+      {isModifyPage && modifyPageButton}
+      {!isWritePage && !isPostPage && !isModifyPage && defaultButton}
 
       {isOpen &&
         (modalType === 'login' ? (

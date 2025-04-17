@@ -6,7 +6,7 @@ export default function Input({ type, label, isLoginPage = false, isKakao = fals
       <input
         type={type}
         placeholder={label === '생년월일' ? 'YYYY - MM - DD' : label}
-        className={`py-3 px-4 border border-gray90 rounded-sm ${isKakao ? 'bg-gray90 placeholder:text-gray56' : 'bg-white placeholder:text-gray78'}`}
+        className={`py-3 px-4 border border-gray90 rounded-sm ${isKakao ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
       />
       {label === '닉네임' ? limit : undefined}
     </label>
