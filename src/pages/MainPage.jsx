@@ -1,8 +1,9 @@
 import PostItem from '@components/PostItem'
+import Pagination from '@components/Pagination'
 
 export default function MainPage() {
   return (
-    <div className='py-5 pt-20 desktop:py-8 desktop:max-w-[688px] m-auto'>
+    <div className='py-5 pt-20 desktop:max-w-[688px] mx-auto'>
       <PostItem isImg={true} />
       <PostItem />
       <PostItem isImg={true} />
@@ -11,6 +12,8 @@ export default function MainPage() {
       <PostItem isImg={true} />
       <PostItem />
       <PostItem />
+
+      <Pagination />
     </div>
   )
 }

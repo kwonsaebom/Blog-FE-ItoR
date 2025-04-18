@@ -1,5 +1,6 @@
 import PostItem from '@components/PostItem'
 import UserInfo from '@components/UserInfo'
+import Pagination from '@components/Pagination'
 
 export default function MyPage() {
   return (
@@ -18,6 +19,7 @@ export default function MyPage() {
           <PostItem />
           <PostItem />
         </div>
+        <Pagination />
       </div>
     </>
   )
