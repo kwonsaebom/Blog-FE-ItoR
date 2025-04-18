@@ -11,7 +11,7 @@ export default function ModalContent({
   const primaryColor = 'bg-point border-point'
 
   const handleDelete = () => {
-    setToastOpen(true)
+    setToastOpen?.(true)
     onClose()
   }
 

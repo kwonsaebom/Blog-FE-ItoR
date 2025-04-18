@@ -12,7 +12,7 @@ import LogoIcon from '@assets/icons/logo_black.svg?react'
 import ChatIcon from '@assets/icons/icon_chat.svg?react'
 import MoreIcon from '@assets/icons/icon_more.svg?react'
 
-export default function Header() {
+export default function Header({ onSidebarToggle }) {
   const { isOpen, open, close } = useModal()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [modalType, setModalType] = useState('default')
@@ -34,8 +34,8 @@ export default function Header() {
 
   const writePageButton = (
     <div className='flex gap-1'>
-      <button className='py-2 px-3 text-negative'>삭제하기</button>
-      <button className='py-2 px-3'>게시하기</button>
+      <button className='py-2 px-3 text-negative cursor-pointer'>삭제하기</button>
+      <button className='py-2 px-3 cursor-pointer'>게시하기</button>
     </div>
   )
 
@@ -88,9 +88,7 @@ export default function Header() {
       <div className='flex items-center gap-3'>
         <button
           className='cursor-pointer'
-          onClick={() => {
-            setIsSidebarOpen(true)
-          }}
+          onClick={onSidebarToggle}
           // onClick={() => {
           //   open()
           //   setModalType('login')

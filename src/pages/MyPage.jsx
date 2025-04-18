@@ -4,7 +4,7 @@ import UserInfo from '@components/UserInfo'
 export default function MyPage() {
   return (
     <>
-      <div className='pt-35 bg-gray96'>
+      <div className='pt-30 bg-gray96 px-2'>
         <UserInfo isMyPage={true} />
       </div>
       <div className='py-5 desktop:py-8 desktop:max-w-[688px] m-auto'>
