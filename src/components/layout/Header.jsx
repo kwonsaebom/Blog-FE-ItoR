@@ -12,7 +12,7 @@ import LogoIcon from '@assets/icons/logo_black.svg?react'
 import ChatIcon from '@assets/icons/icon_chat.svg?react'
 import MoreIcon from '@assets/icons/icon_more.svg?react'
 
-export default function Header({ onSidebarToggle }) {
+export default function Header({ onSidebarToggle, setIsEditable, isEditable }) {
   const { isOpen, open, close } = useModal()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [modalType, setModalType] = useState('default')
@@ -68,10 +68,35 @@ export default function Header({ onSidebarToggle }) {
 
   const modifyPageButton = (
     <>
-      <div className='flex gap-1'>
-        <button className='py-2 px-3 text-negative'>취소하기</button>
-        <button className='py-2 px-3'>저장하기</button>
-      </div>
+      {isEditable ? (
+        <div className='flex gap-1'>
+          <button
+            onClick={() => {
+              setIsEditable(false)
+            }}
+            className='py-2 px-3 text-negative cursor-pointer'
+          >
+            취소하기
+          </button>
+          <button
+            onClick={() => {
+              setIsEditable(false)
+            }}
+            className='py-2 px-3 cursor-pointer'
+          >
+            저장하기
+          </button>
+        </div>
+      ) : (
+        <button
+          className='py-2 px-3 cursor-pointer'
+          onClick={() => {
+            setIsEditable(true)
+          }}
+        >
+          수정하기
+        </button>
+      )}
     </>
   )
 

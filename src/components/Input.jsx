@@ -1,4 +1,10 @@
-export default function Input({ type, label, isLoginPage = false, isKakao = false }) {
+export default function Input({
+  type,
+  label,
+  isLoginPage = false,
+  isKakao = false,
+  isEditable = true,
+}) {
   const limit = <p className='text-gray78 text-xs'>* 20글자 이내</p>
   return (
     <label className={`flex flex-col gap-3 ${isLoginPage ? '' : 'my-3'}`}>
@@ -6,7 +12,8 @@ export default function Input({ type, label, isLoginPage = false, isKakao = fals
       <input
         type={type}
         placeholder={label === '생년월일' ? 'YYYY - MM - DD' : label}
-        className={`py-3 px-4 border border-gray90 rounded-sm text-black ${isKakao ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
+        disabled={!isEditable}
+        className={`py-3 px-4 border border-gray90 rounded-sm text-black focus:outline-0 ${isKakao ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
       />
       {label === '닉네임' ? limit : undefined}
     </label>

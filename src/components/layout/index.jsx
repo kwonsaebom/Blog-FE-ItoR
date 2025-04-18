@@ -7,6 +7,8 @@ import Sidebar from '@components/layout/Sidebar'
 
 export default function Layout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isEditable, setIsEditable] = useState(false)
+
   const pathname = useLocation().pathname.split('/')[1]
 
   const toggleSidebar = () => {
@@ -19,7 +21,11 @@ export default function Layout() {
 
   return (
     <>
-      <Header onSidebarToggle={toggleSidebar} />
+      <Header
+        onSidebarToggle={toggleSidebar}
+        setIsEditable={setIsEditable}
+        isEditable={isEditable}
+      />
       {isSidebarOpen && (
         <>
           <div className='fixed inset-0 z-10 bg-transparent' onClick={closeSidebar} />
@@ -27,7 +33,7 @@ export default function Layout() {
         </>
       )}
       <main className='y-10 z-0'>
-        <Outlet />
+        <Outlet context={{ isEditable }} />
       </main>
     </>
   )
