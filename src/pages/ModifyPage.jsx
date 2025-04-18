@@ -4,22 +4,26 @@ import LogoIcon from '@assets/icons/logo_circle.svg?react'
 import PhotoIcon from '@assets/icons/icon_add_photo.svg?react'
 import KakaoIcon from '@assets/icons/icon_kakao.svg?react'
 
-export default function ModifyPage() {
+export default function ModifyPage({ isModify }) {
   const isKakao = false
   return (
     <>
       <div className='bg-gray96 py-3 px-4 pt-35 text-sm font-light text-gray56'>
-        <div className='desktop:max-w-[688px] desktop:m-auto'>
+        <div className='desktop:max-w-[688px] desktop:m-auto px-3'>
           <LogoIcon className='w-16 h-16' />
           <input
             type='text'
             placeholder='닉네임'
             className={
-              'w-full mt-6 py-3 px-4 border border-gray90 rounded-sm bg-transparent placeholder:text56 text-2xl font-medium'
+              'w-full mt-6 py-3 px-4 border border-gray90 rounded-sm bg-transparent placeholder:text56 text-black text-2xl font-medium'
             }
           />
           <p className='px-2 py-3 -mb-1 text-xs font-light text-gray78'>* 20글자 이내</p>
-          <Input type='text' label='한 줄 소개' />
+          <input
+            type='text'
+            placeholder='한줄소개'
+            className={`w-full py-3 px-4 mb-4 border border-gray90 rounded-sm text-black ${isKakao ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
+          />
         </div>
       </div>
       <section className='py-3 px-4 flex flex-col text-sm font-light text-gray56 desktop:max-w-[688px] desktop:m-auto'>
