@@ -1,36 +1,43 @@
 import { useOutletContext } from 'react-router-dom'
+import { useState } from 'react'
 
 import Input from '@components/Input'
 
 import LogoIcon from '@assets/icons/logo_circle.svg?react'
-import PhotoIcon from '@assets/icons/icon_add_photo.svg?react'
 import KakaoIcon from '@assets/icons/icon_kakao.svg?react'
+
+import { nicknameValid, passwordValid } from '@hooks/validation'
 
 export default function ModifyPage() {
   const { isEditable } = useOutletContext()
-  const isKakao = true
+  const isKakao = false
+
+  const [nickname, setNickname] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordCheck, setPasswordCheck] = useState('')
+
+  const nicknameError = isEditable ? nicknameValid(nickname) : ''
+  const passwordError = isEditable ? passwordValid(password, passwordCheck) : ''
+
   return (
     <>
       <div className='bg-gray96 py-3 px-4 pt-35 text-sm font-light text-gray56'>
         <div className='desktop:max-w-[688px] desktop:m-auto desktop:px-4'>
           <LogoIcon className='w-16 h-16' />
-          <input
+
+          <Input
             type='text'
-            placeholder='닉네임'
-            disabled={!isEditable}
-            className={
-              'w-full mt-6 py-3 px-4 border border-gray90 rounded-sm bg-transparent placeholder:text56 text-black text-2xl font-medium focus:outline-0'
-            }
+            label='닉네임'
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            isEditable={isEditable}
+            error={nicknameError}
           />
-          <p className='px-2 py-3 -mb-1 text-xs font-light text-gray78'>* 20글자 이내</p>
-          <input
-            type='text'
-            placeholder='한줄소개'
-            disabled={!isEditable}
-            className={`w-full py-3 px-4 mb-4 border border-gray90 rounded-sm text-black focus:outline-0 ${isKakao ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
-          />
+
+          <Input type='text' label='한줄소개' isEditable={isEditable} isKakao={isKakao} />
         </div>
       </div>
+
       <section className='py-3 px-4 flex flex-col text-sm font-light text-gray56 desktop:max-w-[688px] desktop:m-auto'>
         {isKakao && (
           <label className='flex flex-col gap-3 my-3'>
@@ -41,6 +48,7 @@ export default function ModifyPage() {
             </div>
           </label>
         )}
+
         <Input
           type='email'
           label='이메일'
@@ -48,8 +56,27 @@ export default function ModifyPage() {
           isEditable={isEditable}
           isDisabled={true}
         />
-        {!isKakao && <Input type='password' label='비밀번호' isEditable={isEditable} />}
-        {!isKakao && <Input type='password' label='비밀번호 확인' isEditable={isEditable} />}
+
+        {!isKakao && (
+          <>
+            <Input
+              type='password'
+              label='비밀번호'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              isEditable={isEditable}
+            />
+            <Input
+              type='password'
+              label='비밀번호 확인'
+              value={passwordCheck}
+              onChange={(e) => setPasswordCheck(e.target.value)}
+              isEditable={isEditable}
+              error={passwordError}
+            />
+          </>
+        )}
+
         <Input
           type='text'
           label='이름'
@@ -57,6 +84,7 @@ export default function ModifyPage() {
           isEditable={isEditable}
           isDisabled={true}
         />
+
         <Input type='text' label='생년월일' isEditable={isEditable} />
       </section>
     </>
