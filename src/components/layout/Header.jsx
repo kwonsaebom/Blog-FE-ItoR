@@ -78,14 +78,15 @@ export default function Header({ onSidebarToggle, setIsEditable, isEditable }) {
           >
             취소하기
           </button>
-          <button
+          <Link
             onClick={() => {
               setIsEditable(false)
             }}
             className='py-2 px-3 cursor-pointer'
+            to='/mypage'
           >
             저장하기
-          </button>
+          </Link>
         </div>
       ) : (
         <button

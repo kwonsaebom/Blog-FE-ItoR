@@ -12,7 +12,7 @@ export default function ModifyPage() {
   return (
     <>
       <div className='bg-gray96 py-3 px-4 pt-35 text-sm font-light text-gray56'>
-        <div className='desktop:max-w-[688px] desktop:m-auto px-4'>
+        <div className='desktop:max-w-[688px] desktop:m-auto desktop:px-4'>
           <LogoIcon className='w-16 h-16' />
           <input
             type='text'
