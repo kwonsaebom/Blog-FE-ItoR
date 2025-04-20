@@ -8,7 +8,7 @@ import KakaoIcon from '@assets/icons/icon_kakao.svg?react'
 
 export default function ModifyPage() {
   const { isEditable } = useOutletContext()
-  const isKakao = false
+  const isKakao = true
   return (
     <>
       <div className='bg-gray96 py-3 px-4 pt-35 text-sm font-light text-gray56'>
@@ -19,7 +19,7 @@ export default function ModifyPage() {
             placeholder='닉네임'
             disabled={!isEditable}
             className={
-              'w-full mt-6 py-3 px-4 border border-gray90 rounded-sm bg-transparent placeholder:text56 text-black text-2xl font-medium'
+              'w-full mt-6 py-3 px-4 border border-gray90 rounded-sm bg-transparent placeholder:text56 text-black text-2xl font-medium focus:outline-0'
             }
           />
           <p className='px-2 py-3 -mb-1 text-xs font-light text-gray78'>* 20글자 이내</p>
@@ -27,7 +27,7 @@ export default function ModifyPage() {
             type='text'
             placeholder='한줄소개'
             disabled={!isEditable}
-            className={`w-full py-3 px-4 mb-4 border border-gray90 rounded-sm text-black ${isKakao ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
+            className={`w-full py-3 px-4 mb-4 border border-gray90 rounded-sm text-black focus:outline-0 ${isKakao ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
           />
         </div>
       </div>
@@ -41,11 +41,23 @@ export default function ModifyPage() {
             </div>
           </label>
         )}
-        <Input type='email' label='이메일' isKakao={isKakao} isEditable={isEditable} />
+        <Input
+          type='email'
+          label='이메일'
+          isKakao={isKakao}
+          isEditable={isEditable}
+          isDisabled={true}
+        />
         {!isKakao && <Input type='password' label='비밀번호' isEditable={isEditable} />}
         {!isKakao && <Input type='password' label='비밀번호 확인' isEditable={isEditable} />}
-        <Input type='text' label='이름' isKakao={isKakao} isEditable={isEditable} />
-        <Input type='text' label='생년월일' />
+        <Input
+          type='text'
+          label='이름'
+          isKakao={isKakao}
+          isEditable={isEditable}
+          isDisabled={true}
+        />
+        <Input type='text' label='생년월일' isEditable={isEditable} />
       </section>
     </>
   )

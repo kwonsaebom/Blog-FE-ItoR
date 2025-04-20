@@ -4,6 +4,7 @@ export default function Input({
   isLoginPage = false,
   isKakao = false,
   isEditable = true,
+  isDisabled = false,
 }) {
   const limit = <p className='text-gray78 text-xs'>* 20글자 이내</p>
   return (
@@ -12,8 +13,8 @@ export default function Input({
       <input
         type={type}
         placeholder={label === '생년월일' ? 'YYYY - MM - DD' : label}
-        disabled={!isEditable}
-        className={`py-3 px-4 border border-gray90 rounded-sm text-black focus:outline-0 ${isKakao ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
+        disabled={!isEditable || isDisabled}
+        className={`py-3 px-4 border border-gray90 rounded-sm text-black focus:outline-0 ${isKakao || isDisabled ? 'bg-gray90 placeholder:text-gray56' : ' bg-transparent placeholder:text-gray78'}`}
       />
       {label === '닉네임' ? limit : undefined}
     </label>
