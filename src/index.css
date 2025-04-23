@@ -1,13 +1,19 @@
 @import 'tailwindcss';
 
 @theme {
+  --breakpoint-desktop: 391px;
+
+  --shadow-modal: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+
   --color-point: #00a1ff;
   --color-negative: #ff3f3f;
   --color-positive: #15dc5e;
+  --color-kakao-bg: #fee500;
   --color-gray96: #f5f5f5;
   --color-gray90: #e6e6e6;
   --color-gray78: #c8c8c8;
-  --color-gray50: #909090;
-  --color-white: #ffffff;
-  --color-black: #111112;
+  --color-gray56: #909090;
+  --color-gray33: #555555;
+  --color-gray30: #333333;
+  --color-neutral5: #d9d9d9;
 }

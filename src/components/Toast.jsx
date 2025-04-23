@@ -1,38 +1,21 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
+import { createPortal } from 'react-dom'
 
-import theme from "@styles/theme";
+import DoneIcon from '@assets/icons/icon_done.svg?react'
+import ErrorIcon from '@assets/icons/icon_error.svg?react'
 
-export default function Toast({ message, color, onClose }) {
-  useEffect(() => {
-    const timer = setTimeout(() => {}, 3000);
+export default function Toast({ isError, children }) {
+  const errorStyle = 'text-negative'
+  const doneStyle = 'text-positive'
+  const errorBorder = 'border-negative'
+  const doneBorder = 'border-positive'
 
-    const closeTimer = setTimeout(() => {
-      onClose();
-    }, 3500);
-
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(closeTimer);
-    };
-  }, [message, onClose]);
-
-  return <ToastContainer color={color}>{message}</ToastContainer>;
+  return createPortal(
+    <div
+      className={`w-fit py-2 px-3 flex items-center gap-1 border rounded-3xl fixed text-sm transition-opacity duration-500 ease-in-out ${isError ? errorBorder : doneBorder} absolute top-22 inset-x-0 m-auto`}
+    >
+      {isError ? <ErrorIcon /> : <DoneIcon />}
+      <p className={isError ? errorStyle : doneStyle}>{children}</p>
+    </div>,
+    document.getElementById('toast-root'),
+  )
 }
-
-const ToastContainer = styled.div`
-  display: inline-block;
-  color: ${({ color }) => color};
-  border: 1px solid;
-  border-color: ${({ color }) => color || theme.colors.gray50};
-  padding: 8px 12px;
-  border-radius: 25px;
-  font-size: 14px;
-
-  transition: ease-in-out, transform 0.5s ease-in-out;
-
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-`;
