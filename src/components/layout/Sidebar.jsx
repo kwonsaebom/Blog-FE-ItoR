@@ -14,8 +14,10 @@ export default function Sidebar({ closeSidebar }) {
 
   const UserContent = () => (
     <>
-      <UserInfo />
-      <div className='flex flex-col h-[70vh] justify-between'>
+      <div>
+        <UserInfo />
+      </div>
+      <div className='flex flex-col h-full justify-between'>
         <div className='flex justify-center gap-2 pt-7'>
           <Link
             to={'/mypage'}
@@ -28,7 +30,7 @@ export default function Sidebar({ closeSidebar }) {
             깃로그 쓰기
           </button>
         </div>
-        <div className='flex justify-center gap-2'>
+        <div className='flex justify-center gap-2 pb-4'>
           <button className='w-[100px] px-3 py-2 border border-gray56 rounded-3xl text-gray56 text-sm cursor-pointer'>
             설정
           </button>
@@ -80,8 +82,8 @@ export default function Sidebar({ closeSidebar }) {
   )
 
   return (
-    <aside className='w-60 h-screen fixed z-20 px-3 py-2 bg-gray96 top-0 left-0'>
-      {isLogIn ? <UserContent /> : <GuestContent />}
+    <aside className='w-60 h-[100vh] fixed z-20 px-3 py-2 bg-gray96 top-0 left-0'>
+      <div className='flex flex-col h-full'> {isLogIn ? <UserContent /> : <GuestContent />}</div>
     </aside>
   )
 }
