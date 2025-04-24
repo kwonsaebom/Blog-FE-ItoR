@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
+import Spinner from '@components/Spinner'
 
 const Layout = lazy(() => import('@components/layout'))
 const MainPage = lazy(() => import('@pages/MainPage'))
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner />}>
         <Layout />
       </Suspense>
     ),
