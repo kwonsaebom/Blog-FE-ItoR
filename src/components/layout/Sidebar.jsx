@@ -65,7 +65,7 @@ export default function Sidebar({ closeSidebar }) {
       <Link
         to={'/mypage'}
         onClick={open}
-        className='w-[100px] mx-3 px-3 py-2 border border-point rounded-3xl text-point text-sm text-center cursor-pointer'
+        className='w-fit mx-3 px-3 py-2 border border-point rounded-3xl text-point text-sm text-center cursor-pointer'
       >
         깃로그 시작하기
       </Link>
