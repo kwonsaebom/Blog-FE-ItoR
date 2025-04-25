@@ -1,4 +1,7 @@
+import { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { loginUser } from '@/api/apiRequest'
 
 import Input from '@components/Input'
 
@@ -33,6 +36,30 @@ export default function AuthForm({ onClose }) {
   const dividerColor = isLoginPage ? 'gray30' : 'gray96'
   const Logo = isLoginPage ? WhiteLogoIcon : BlackLogoIcon
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+
+  const { mutate: login, isLoading } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      localStorage.setItem('accessToken', data.accessToken)
+      onClose()
+    },
+    onError: (error) => {
+      const msg = error?.response?.data?.message || '로그인에 실패했습니다.'
+
+      setEmailError(msg.includes('이메일') ? msg : '')
+      setPasswordError(!msg.includes('이메일') ? msg : '')
+    },
+  })
+
+  const handleLogin = () => {
+    login({ email, password })
+  }
+
   return (
     <section
       className={`z-40 m-4 py-20 px-8 rounded-lg absolute inset-x-0 top-1/2 -translate-y-1/2  desktop:max-w-[782px] desktop:py-20 desktop:m-auto desktop:flex desktop:gap-[90px]  ${backColor}`}
@@ -52,13 +79,28 @@ export default function AuthForm({ onClose }) {
       <div className='w-[294px] desktop:w-[312px] flex flex-col gap-2 desktop:my-10'>
         {isLoginPage && (
           <>
-            <Input type='email' label='이메일' isLoginPage />
-            <Input type='password' label='비밀번호' isLoginPage />
+            <Input
+              type='email'
+              label='이메일'
+              isLoginPage
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={emailError}
+            />
+
+            <Input
+              type='password'
+              label='비밀번호'
+              isLoginPage
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={passwordError}
+            />
           </>
         )}
 
         <button
-          onClick={mainButtonLink}
+          onClick={isLoginPage ? handleLogin : mainButtonLink}
           className='w-[294px] h-[45px] rounded-md bg-point text-white text-sm cursor-pointer desktop:w-[312px]'
         >
           {mainButtonText}

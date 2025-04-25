@@ -20,13 +20,15 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (res) => res,
   (error) => {
-    if (error.response?.status === 401) {
-      // 토큰 만료, 로그아웃 처리
-      alert('세션이 만료되었습니다.')
-      window.location.href = '/login'
+    const originalRequest = error.config
+    const isLoginRequest = originalRequest?.url?.includes('/auth/login')
+
+    if (error.response?.status === 401 && !isLoginRequest) {
+      alert('세션이 만료되었습니다. 다시 로그인 해주세요.')
+      window.location.href = '/'
     }
+
     return Promise.reject(error)
   },
 )
-
 export default axiosInstance
