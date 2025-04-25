@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom'
 
 export default function Input({
   type,
+  name,
   label,
   value,
   onChange,
@@ -12,7 +13,6 @@ export default function Input({
   error,
 }) {
   const pathname = useLocation().pathname
-
   const isModifyPage = pathname.includes('setting')
 
   return (
@@ -20,15 +20,16 @@ export default function Input({
       {!isLoginPage && !isModifyPage && label}
       <input
         type={type}
+        name={name} // ✅ 추가
         value={value}
         onChange={onChange}
         placeholder={label === '생년월일' ? 'YYYY - MM - DD' : label}
         disabled={!isEditable || isDisabled}
         className={`
           ${isModifyPage && label === '닉네임' ? 'mt-6 text-2xl font-medium' : ''}
-          w-full py-3 px-4 border rounded-sm text-black focus:outline-0
+          w-full py-3 px-4 border rounded-sm text-black focus:outline-0 border-gray90 bg-white
           ${isKakao || isDisabled ? 'bg-gray90 placeholder:text-gray56' : 'bg-transparent placeholder:text-gray78'}
-          ${error ? 'border-red-500' : 'border-gray90'}
+         
         `}
       />
       {isModifyPage && !isEditable && (

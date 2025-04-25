@@ -10,7 +10,7 @@ import LogoIcon from '@assets/icons/logo_circle.svg?react'
 
 export default function Sidebar({ closeSidebar }) {
   const { open, close, isOpen } = useModal()
-  const isLogIn = true
+  const isLogIn = false
 
   const UserContent = () => (
     <>
