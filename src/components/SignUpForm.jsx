@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
 
-import { registerUser } from '@api/apiRequest'
-
+import { registerUser } from '@/api/apiRequest'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import useModal from '@hooks/useModal'
@@ -29,6 +29,14 @@ export default function SignUpForm() {
   const wrapperStyle = 'desktop:max-w-[688px] desktop:m-auto'
   const inputWrapperStyle = 'py-3 px-4 flex flex-col text-sm font-light text-gray56 ' + wrapperStyle
 
+  const { mutate, isLoading } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => open(),
+    onError: (error) => {
+      alert(error?.response?.data?.message || '회원가입에 실패했습니다.')
+    },
+  })
+
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -50,7 +58,8 @@ export default function SignUpForm() {
     passwordCheck: isKakao ? '' : passwordCheckValid(form.password, form.passwordCheck),
     name: nameValid(form.name),
     nickname: nicknameValid(form.nickname),
-    // 생년월일, 한 줄 소개는 생략 가능
+    birthDate: birthValid(form.birthDate),
+    introduction: introValid(form.introduction),
   }
 
   const ProfilePhotoSection = () => (
@@ -103,25 +112,17 @@ export default function SignUpForm() {
       return
     }
 
-    try {
-      const requestBody = {
-        email: form.email,
-        nickname: form.nickname,
-        password: form.password,
-        profilePicture: 'https://example.com/profile.jpg',
-        birthDate: form.birthDate,
-        name: form.name,
-        introduction: form.introduction,
-      }
-
-      await registerUser(requestBody)
-
-      // ✅ 성공 시
-      open()
-    } catch (error) {
-      console.error('회원가입 실패:', error.message)
-      alert('회원가입에 실패했습니다. 다시 시도해주세요.')
+    const requestBody = {
+      email: form.email,
+      nickname: form.nickname,
+      password: form.password,
+      profilePicture: 'https://example.com/profile.jpg',
+      birthDate: form.birthDate,
+      name: form.name,
+      introduction: form.introduction,
     }
+
+    mutate(requestBody)
   }
 
   return (
