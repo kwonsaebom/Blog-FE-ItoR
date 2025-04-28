@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 
-import { registerUser } from '@/api/apiRequest'
+import { registerUser, registerKakaoUser } from '@/api/apiRequest'
 import Input from '@components/Input'
 import Modal from '@components/Modal'
 import useModal from '@hooks/useModal'
@@ -35,11 +35,23 @@ export default function SignUpForm() {
     close()
     navigate('/')
   }
-  const { mutate, isLoading } = useMutation({
+
+  // 일반 회원가입
+  const { mutate } = useMutation({
     mutationFn: registerUser,
     onSuccess: () => open(),
     onError: (error) => {
       alert(error?.response?.data?.message || '회원가입에 실패했습니다.')
+    },
+  })
+
+  // 카카오 회원가입
+  const { mutate: kakaoMutate } = useMutation({
+    mutationFn: registerKakaoUser,
+    onSuccess: () => open(),
+    onError: (error) => {
+      console.error('카카오 회원가입 에러:', error.response?.data || error.message)
+      alert(error?.response?.data?.message || '카카오 회원가입에 실패했습니다.')
     },
   })
 
@@ -53,6 +65,15 @@ export default function SignUpForm() {
     introduction: '',
   })
 
+  const location = useLocation()
+  const kakaoUserData = location.state?.kakaoUserData
+
+  useEffect(() => {
+    if (isKakao && kakaoUserData?.nickname) {
+      setForm((prev) => ({ ...prev, nickname: kakaoUserData.nickname }))
+    }
+  }, [isKakao, kakaoUserData])
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
@@ -60,12 +81,14 @@ export default function SignUpForm() {
 
   const errors = {
     email: emailValid(form.email),
-    password: passwordValid(form.password),
-    passwordCheck: passwordCheckValid(form.password, form.passwordCheck),
     name: nameValid(form.name),
-    nickname: nicknameValid(form.nickname),
     birthDate: birthValid(form.birthDate),
     introduction: introValid(form.introduction),
+    ...(!isKakao && {
+      nickname: nicknameValid(form.nickname),
+      password: passwordValid(form.password),
+      passwordCheck: passwordCheckValid(form.password, form.passwordCheck),
+    }),
   }
 
   const ProfilePhotoSection = () => (
@@ -92,43 +115,47 @@ export default function SignUpForm() {
 
   const inputs = [
     { name: 'email', type: 'email', label: '이메일' },
+    isKakao && { name: 'name', type: 'text', label: '이름' },
     !isKakao && { name: 'password', type: 'password', label: '비밀번호' },
     !isKakao && { name: 'passwordCheck', type: 'password', label: '비밀번호 확인' },
-    { name: 'name', type: 'text', label: '이름' },
+    !isKakao && { name: 'name', type: 'text', label: '이름' },
     { name: 'birthDate', type: 'text', label: '생년월일' },
     { name: 'nickname', type: 'text', label: '닉네임' },
     { name: 'introduction', type: 'text', label: '한 줄 소개' },
   ].filter(Boolean)
 
   const handleSubmit = async () => {
-    const currentErrors = {
-      email: emailValid(form.email),
-      password: passwordValid(form.password),
-      passwordCheck: passwordCheckValid(form.password, form.passwordCheck),
-      name: nameValid(form.name),
-      nickname: nicknameValid(form.nickname),
-      birthDate: birthValid(form.birthDate),
-      introduction: introValid(form.introduction),
-    }
-
-    const hasError = Object.values(currentErrors).some((errorMsg) => errorMsg !== '')
+    const hasError = Object.values(errors).some((errorMsg) => errorMsg !== '')
 
     if (hasError) {
       alert('입력한 정보를 다시 확인해주세요.')
       return
     }
 
-    const requestBody = {
-      email: form.email,
-      nickname: form.nickname,
-      password: form.password,
-      profilePicture: 'https://example.com/profile.jpg',
-      birthDate: form.birthDate,
-      name: form.name,
-      introduction: form.introduction,
-    }
+    if (isKakao) {
+      const kakaoRequestBody = {
+        email: form.email,
+        nickname: form.name, // 수정 필요 ➡️ 이름 138, 141 번째 줄 바꾸기
+        profilePicture: kakaoUserData?.picture || 'https://example.com/profile.jpg',
+        birthDate: form.birthDate,
+        name: kakaoUserData?.nickname, // 수정 필요
+        introduction: form.introduction,
+      }
 
-    mutate(requestBody)
+      kakaoMutate(kakaoRequestBody) // ✅ 카카오 회원가입 API 호출
+    } else {
+      const requestBody = {
+        email: form.email,
+        nickname: form.nickname,
+        password: form.password,
+        profilePicture: 'https://example.com/profile.jpg',
+        birthDate: form.birthDate,
+        name: form.name,
+        introduction: form.introduction,
+      }
+
+      mutate(requestBody) // ✅ 일반 회원가입 API 호출
+    }
   }
 
   return (
@@ -156,7 +183,7 @@ export default function SignUpForm() {
             onChange={handleChange}
             error={errors[name]}
             isEditable={isEditable}
-            isKakao={isKakao}
+            isKakao={isKakao && name === 'nickname'}
           />
         ))}
 
