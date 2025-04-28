@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
-import { loginUser } from '@/api/apiRequest'
-
+import { loginUser, getUser } from '@api/apiRequest'
+import { useAuthStore } from '@stores/authStore'
 import Input from '@components/Input'
 
 import BlackLogoIcon from '@assets/icons/logo_black.svg?react'
@@ -15,6 +15,7 @@ export default function AuthForm({ onClose }) {
   const isLoginPage = !pathname.includes('signup')
 
   const navigate = useNavigate()
+  const { login } = useAuthStore()
 
   // 조건 처리 (로그인 / 회원가입)
   const mainButtonText = `이메일로 ${isLoginPage ? '로그인' : '회원가입'}`
@@ -42,11 +43,18 @@ export default function AuthForm({ onClose }) {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
-  const { mutate: login, isLoading } = useMutation({
+  const { mutate: loginMutate, isLoading } = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       localStorage.setItem('accessToken', data.accessToken)
-      onClose()
+      try {
+        const userData = await getUser()
+        login(userData)
+        onClose()
+      } catch (error) {
+        console.error('유저 정보 불러오기 실패', error)
+        alert('로그인에 실패했습니다')
+      }
     },
     onError: (error) => {
       const msg = error?.response?.data?.message || '로그인에 실패했습니다.'
@@ -57,7 +65,7 @@ export default function AuthForm({ onClose }) {
   })
 
   const handleLogin = () => {
-    login({ email, password })
+    loginMutate({ email, password })
   }
 
   return (

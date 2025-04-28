@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 
 import { registerUser } from '@/api/apiRequest'
@@ -29,6 +29,12 @@ export default function SignUpForm() {
   const wrapperStyle = 'desktop:max-w-[688px] desktop:m-auto'
   const inputWrapperStyle = 'py-3 px-4 flex flex-col text-sm font-light text-gray56 ' + wrapperStyle
 
+  const navigate = useNavigate()
+
+  const handleSignUp = () => {
+    close()
+    navigate('/')
+  }
   const { mutate, isLoading } = useMutation({
     mutationFn: registerUser,
     onSuccess: () => open(),
@@ -54,8 +60,8 @@ export default function SignUpForm() {
 
   const errors = {
     email: emailValid(form.email),
-    password: isKakao ? '' : passwordValid(form.password),
-    passwordCheck: isKakao ? '' : passwordCheckValid(form.password, form.passwordCheck),
+    password: passwordValid(form.password),
+    passwordCheck: passwordCheckValid(form.password, form.passwordCheck),
     name: nameValid(form.name),
     nickname: nicknameValid(form.nickname),
     birthDate: birthValid(form.birthDate),
@@ -97,8 +103,8 @@ export default function SignUpForm() {
   const handleSubmit = async () => {
     const currentErrors = {
       email: emailValid(form.email),
-      password: isKakao ? '' : passwordValid(form.password),
-      passwordCheck: isKakao ? '' : passwordCheckValid(form.password, form.passwordCheck),
+      password: passwordValid(form.password),
+      passwordCheck: passwordCheckValid(form.password, form.passwordCheck),
       name: nameValid(form.name),
       nickname: nicknameValid(form.nickname),
       birthDate: birthValid(form.birthDate),
@@ -168,7 +174,7 @@ export default function SignUpForm() {
             primaryText='확인'
             isCancel={false}
             isLoginPage={false}
-            onClose={close}
+            onClose={handleSignUp}
           />
         )}
       </section>
