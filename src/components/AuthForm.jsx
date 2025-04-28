@@ -28,9 +28,20 @@ export default function AuthForm({ onClose }) {
     }
   }
 
+  const handleKakaoURL = async () => {
+    try {
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/kakao`
+
+      console.log(code)
+    } catch (error) {
+      console.error('카카오 로그인 실패', error)
+      alert('카카오 로그인에 실패했습니다')
+    }
+  }
+
   const kakaoButtonText = `카카오로 ${isLoginPage ? '로그인' : '회원가입'}`
   const kakaoButtonLink = () => {
-    navigate(isLoginPage ? '' : '/signup/kakao')
+    isLoginPage ? handleKakaoURL() : navigate('/signup/kakao')
   }
   const backColor = isLoginPage ? 'bg-black' : ''
   const dividerText = isLoginPage ? 'SNS' : '또는'
