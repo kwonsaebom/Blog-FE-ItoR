@@ -70,7 +70,7 @@ export default function SignUpForm() {
 
   useEffect(() => {
     if (isKakao && kakaoUserData?.nickname) {
-      setForm((prev) => ({ ...prev, nickname: kakaoUserData.nickname }))
+      setForm((prev) => ({ ...prev, name: kakaoUserData.nickname }))
     }
   }, [isKakao, kakaoUserData])
 
@@ -81,11 +81,11 @@ export default function SignUpForm() {
 
   const errors = {
     email: emailValid(form.email),
-    name: nameValid(form.name),
     birthDate: birthValid(form.birthDate),
+    nickname: nicknameValid(form.nickname),
     introduction: introValid(form.introduction),
     ...(!isKakao && {
-      nickname: nicknameValid(form.nickname),
+      name: nameValid(form.name),
       password: passwordValid(form.password),
       passwordCheck: passwordCheckValid(form.password, form.passwordCheck),
     }),
@@ -135,13 +135,14 @@ export default function SignUpForm() {
     if (isKakao) {
       const kakaoRequestBody = {
         email: form.email,
-        nickname: form.name, // 수정 필요 ➡️ 이름 138, 141 번째 줄 바꾸기
+        nickname: form.nickname,
         profilePicture: kakaoUserData?.picture || 'https://example.com/profile.jpg',
         birthDate: form.birthDate,
-        name: kakaoUserData?.nickname, // 수정 필요
+        name: kakaoUserData?.nickname,
         introduction: form.introduction,
       }
 
+      console.log(kakaoRequestBody)
       kakaoMutate(kakaoRequestBody) // ✅ 카카오 회원가입 API 호출
     } else {
       const requestBody = {
@@ -183,7 +184,6 @@ export default function SignUpForm() {
             onChange={handleChange}
             error={errors[name]}
             isEditable={isEditable}
-            isKakao={isKakao && name === 'nickname'}
           />
         ))}
 
