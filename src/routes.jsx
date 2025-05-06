@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <MainPage /> },
-      { path: '/post/:id', element: <PostDetailPage /> },
+      { path: '/post/:postId', element: <PostDetailPage /> },
       { path: '/write', element: <PostWritePage /> },
       { path: '/signUp', element: <SignUpPage /> },
       { path: '/signup/email', element: <EmailSignUpPage /> },

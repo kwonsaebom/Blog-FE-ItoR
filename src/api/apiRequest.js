@@ -31,6 +31,12 @@ export const getPostList = async (size, page) => {
   const res = await axiosInstance.get('/posts/all', {
     params: { size, page },
   })
+  return res.data.data
+}
 
+export const getPostDetail = async (postId) => {
+  const res = await axiosInstance.get('/posts', {
+    params: { postId },
+  })
   return res.data.data
 }

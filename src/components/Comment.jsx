@@ -6,7 +6,7 @@ import Modal from '@components/Modal'
 import PostMeta from '@components/PostMeta'
 import MoreIcon from '@assets/icons/icon_more.svg?react'
 
-export default function Comment({ setIsToastOpen }) {
+export default function Comment({ content, setIsToastOpen }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const { open, close, isOpen } = useModal()
@@ -40,11 +40,7 @@ export default function Comment({ setIsToastOpen }) {
             </>
           )}
         </div>
-        <p className='px-4 text-gray30 text-sm font-light'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, esse voluptates qui
-          excepturi in beatae placeat sequi possimus officiis eum veniam consequatur molestias
-          voluptas harum blanditiis dolores, eos quam dolorum.
-        </p>
+        <p className='px-4 text-gray30 text-sm font-light'>{content}</p>
       </section>
       {isOpen && (
         <Modal
