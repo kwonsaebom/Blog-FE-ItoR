@@ -26,3 +26,11 @@ export const getKakaoUser = async (code) => {
   })
   return res.data.data
 }
+
+export const getPostList = async (size, page) => {
+  const res = await axiosInstance.get('/posts/all', {
+    params: { size, page },
+  })
+
+  return res.data.data
+}

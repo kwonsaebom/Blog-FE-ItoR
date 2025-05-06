@@ -1,12 +1,9 @@
 import PageNumber from '@components/PageNumber'
-import { useState } from 'react'
 
-export default function Pagination({ totalPages = 5 }) {
-  const [currentPage, setCurrentPage] = useState(1)
-
+export default function Pagination({ currentPage, totalPages, setPage }) {
   const goToPage = (page) => {
     if (page < 1 || page > totalPages) return
-    setCurrentPage(page)
+    setPage(page)
   }
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
