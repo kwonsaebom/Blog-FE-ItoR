@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
-
+import { useMutation } from '@tanstack/react-query'
+import { loginUser, getUser } from '@api/apiRequest'
+import { useAuthStore } from '@stores/authStore'
 import Input from '@components/Input'
 
 import BlackLogoIcon from '@assets/icons/logo_black.svg?react'
@@ -12,6 +15,7 @@ export default function AuthForm({ onClose }) {
   const isLoginPage = !pathname.includes('signup')
 
   const navigate = useNavigate()
+  const { login } = useAuthStore()
 
   // 조건 처리 (로그인 / 회원가입)
   const mainButtonText = `이메일로 ${isLoginPage ? '로그인' : '회원가입'}`
@@ -24,14 +28,49 @@ export default function AuthForm({ onClose }) {
     }
   }
 
+  const handleKakaoURL = async () => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/kakao`
+  }
+
   const kakaoButtonText = `카카오로 ${isLoginPage ? '로그인' : '회원가입'}`
   const kakaoButtonLink = () => {
-    navigate(isLoginPage ? '' : '/signup/kakao')
+    isLoginPage ? handleKakaoURL() : navigate('/signup/kakao')
   }
   const backColor = isLoginPage ? 'bg-black' : ''
   const dividerText = isLoginPage ? 'SNS' : '또는'
   const dividerColor = isLoginPage ? 'gray30' : 'gray96'
   const Logo = isLoginPage ? WhiteLogoIcon : BlackLogoIcon
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+
+  const { mutate: loginMutate, isLoading } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: async (data) => {
+      localStorage.setItem('accessToken', data.accessToken)
+      try {
+        const userData = await getUser()
+        login(userData)
+        onClose()
+      } catch (error) {
+        console.error('유저 정보 불러오기 실패', error)
+        alert('로그인에 실패했습니다')
+      }
+    },
+    onError: (error) => {
+      const msg = error?.response?.data?.message || '로그인에 실패했습니다.'
+
+      setEmailError(msg.includes('이메일') ? msg : '')
+      setPasswordError(!msg.includes('이메일') ? msg : '')
+    },
+  })
+
+  const handleLogin = () => {
+    loginMutate({ email, password })
+  }
 
   return (
     <section
@@ -52,13 +91,28 @@ export default function AuthForm({ onClose }) {
       <div className='w-[294px] desktop:w-[312px] flex flex-col gap-2 desktop:my-10'>
         {isLoginPage && (
           <>
-            <Input type='email' label='이메일' isLoginPage />
-            <Input type='password' label='비밀번호' isLoginPage />
+            <Input
+              type='email'
+              label='이메일'
+              isLoginPage
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={emailError}
+            />
+
+            <Input
+              type='password'
+              label='비밀번호'
+              isLoginPage
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={passwordError}
+            />
           </>
         )}
 
         <button
-          onClick={mainButtonLink}
+          onClick={isLoginPage ? handleLogin : mainButtonLink}
           className='w-[294px] h-[45px] rounded-md bg-point text-white text-sm cursor-pointer desktop:w-[312px]'
         >
           {mainButtonText}

@@ -32,7 +32,7 @@ export default function Layout() {
           <Sidebar closeSidebar={closeSidebar} />
         </>
       )}
-      <main className='y-10 z-0'>
+      <main className='py-15 z-0'>
         <Outlet context={{ isEditable }} />
       </main>
     </>

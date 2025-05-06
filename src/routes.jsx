@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
+import Spinner from '@components/Spinner'
 
 const Layout = lazy(() => import('@components/layout'))
 const MainPage = lazy(() => import('@pages/MainPage'))
@@ -10,12 +11,13 @@ const EmailSignUpPage = lazy(() => import('@pages/EmailSignUpPage'))
 const KakaoSignUpPage = lazy(() => import('@pages/KakaoSignUpPage'))
 const MyPage = lazy(() => import('@pages/MyPage'))
 const ModifyPage = lazy(() => import('@pages/ModifyPage'))
+const KakaoSuccessPage = lazy(() => import('@pages/KakaoSuccessPage'))
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner />}>
         <Layout />
       </Suspense>
     ),
@@ -28,6 +30,7 @@ const router = createBrowserRouter([
       { path: '/signup/kakao', element: <KakaoSignUpPage /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/mypage/setting', element: <ModifyPage /> },
+      { path: '/oauth/kakao/success', element: <KakaoSuccessPage /> },
     ],
   },
 ])
